@@ -1,7 +1,7 @@
 {
   "name": "@block-kit/react",
   "version": "1.0.0",
-  "description": "",
+  "description": "React 适配器",
   "main": "./dist/lib/index.js",
   "types": "./dist/es/index.d.ts",
   "module": "./dist/es/index.js",
