@@ -1,4 +1,4 @@
-# Star-editor
+# Star-Editor
 
 从零实现的富文本编辑器
 
