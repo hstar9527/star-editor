@@ -1,0 +1,197 @@
+import type { Editor, LineState } from "@block-kit/core";
+import type { LeafState } from "@block-kit/core";
+import { NODE_KEY, PLUGIN_FUNC } from "@block-kit/core";
+import { EOL, EOL_OP } from "@block-kit/delta";
+import { cs, isDOMText } from "@block-kit/utils";
+import type { P } from "@block-kit/utils/dist/es/types";
+import type { VNode } from "vue";
+import { computed, defineComponent, Fragment, h, watch } from "vue";
+
+import { EDITOR_TO_WRAP_LEAF_KEYS, EDITOR_TO_WRAP_LEAF_PLUGINS } from "../plugin/modules/wrap";
+import type { VueLineContext, VueNode, VueWrapLeafContext } from "../plugin/types";
+import { JSX_TO_STATE, LEAF_TO_TEXT } from "../utils/weak-map";
+import { getWrapSymbol } from "../utils/wrapper";
+import { EOLModel } from "./eol";
+import { LeafModel } from "./leaf";
+
+export type LineModelProps = {
+  editor: Editor;
+  index: number;
+  lineState: LineState;
+};
+
+/**
+ * Line Model
+ * @param props
+ */
+export const LineModel = /*#__PURE__*/ defineComponent<LineModelProps>({
+  name: "LineModel",
+  props: ["editor", "index", "lineState"],
+  setup: props => {
+    /**
+     * 设置行 DOM 节点
+     */
+    const setModel = (dom: P.Any) => {
+      if (dom instanceof HTMLDivElement) {
+        // 必须从 props 取 lineState, 否则会造成闭包问题
+        props.editor.model.setLineModel(dom, props.lineState);
+      }
+    };
+
+    /**
+     * 首次处理会将所有 DOM 渲染, 不需要执行脏数据检查
+     * 需要 LayoutEffect 以保证 DOM -> Sel 的执行顺序
+     */
+    watch(
+      () => props.lineState,
+      () => {
+        const leaves = props.lineState.getLeaves();
+        for (const leaf of leaves) {
+          const dom = LEAF_TO_TEXT.get(leaf);
+          if (!dom) continue;
+          const text = leaf.getText();
+          // 避免 Vue 非受控与 IME 造成的 DOM 内容问题
+          if (text === dom.textContent) continue;
+          props.editor.logger.debug("Correct Text Node", dom);
+          const nodes = dom.childNodes;
+          for (let i = 1; i < nodes.length; ++i) {
+            const node = nodes[i];
+            node && node.remove();
+          }
+          if (isDOMText(dom.firstChild)) {
+            dom.firstChild.nodeValue = text;
+          }
+        }
+      },
+      { flush: "pre" }
+    );
+
+    /**
+     * 处理行内的节点
+     */
+    const elements = computed(() => {
+      const leaves = props.lineState.getLeaves();
+      const textLeaves = leaves.slice(0, -1);
+      const nodes = textLeaves.map((n, i) => {
+        const node = h(LeafModel, {
+          key: i,
+          editor: props.editor,
+          index: i,
+          leafState: n,
+        });
+        JSX_TO_STATE.set(node, n);
+        return node;
+      });
+      // 空行则仅存在一个 Leaf, 此时需要渲染空的占位节点
+      if (!nodes.length && leaves[0]) {
+        const leaf = leaves[0];
+        const node = h(EOLModel, {
+          key: EOL,
+          editor: props.editor,
+          leafState: leaf,
+        });
+        JSX_TO_STATE.set(node, leaf);
+        nodes.push(node);
+        return nodes;
+      }
+      // inline-void(embed) 在行未时需要预设零宽字符来放置光标
+      const eolLeaf = leaves[leaves.length - 1];
+      const lastLeaf = textLeaves[textLeaves.length - 1];
+      if (lastLeaf && eolLeaf && lastLeaf.embed) {
+        const node = h(EOLModel, {
+          key: EOL,
+          editor: props.editor,
+          leafState: eolLeaf,
+        });
+        JSX_TO_STATE.set(node, eolLeaf);
+        nodes.push(node);
+        return nodes;
+      }
+      return nodes;
+    });
+
+    /**
+     * 将行内节点包装组合 O(N)
+     */
+    const children = computed((): VNode[] => {
+      const wrapped: VNode[] = [];
+      const keys = EDITOR_TO_WRAP_LEAF_KEYS.get(props.editor);
+      const plugins = EDITOR_TO_WRAP_LEAF_PLUGINS.get(props.editor);
+      if (!keys || !plugins) return elements.value;
+      const len = elements.value.length;
+      for (let i = 0; i < len; ++i) {
+        const element = elements.value[i];
+        const symbol = getWrapSymbol(keys, element);
+        const leaf = JSX_TO_STATE.get(element) as LeafState;
+        if (!element || !leaf || !symbol) {
+          wrapped.push(element);
+          continue;
+        }
+        // 执行到此处说明需要包装相关节点(即使仅单个节点)
+        const nodes: VNode[] = [element];
+        for (let k = i + 1; k < len; ++k) {
+          const next = elements.value[k];
+          const nextSymbol = getWrapSymbol(keys, next);
+          if (!next || !nextSymbol || nextSymbol !== symbol) {
+            // 回退到上一个值, 以便下次循环时重新检查
+            i = k - 1;
+            break;
+          }
+          nodes.push(next);
+          i = k;
+        }
+        // 通过插件渲染包装节点
+        let wrapper: VueNode = nodes;
+        const op = leaf.op;
+        for (const plugin of plugins) {
+          // 这里的状态以首个节点为准
+          const context: VueWrapLeafContext = {
+            leafState: leaf,
+            children: wrapper,
+          };
+          if (plugin.match(leaf.op.attributes || {}, op) && plugin.wrapLeaf) {
+            wrapper = plugin.wrapLeaf(context);
+          }
+        }
+        const key = `${i - nodes.length + 1}-${i}`;
+        wrapped.push(h(Fragment, { key }, [wrapper]));
+      }
+      return wrapped;
+    });
+
+    /**
+     * 处理行级节点的渲染
+     */
+    const runtime = computed(() => {
+      const context: VueLineContext = {
+        classList: [],
+        lineState: props.lineState,
+        attributes: props.lineState.attributes,
+        style: {},
+        children: children.value,
+      };
+      const plugins = props.editor.plugin.getPriorityPlugins(PLUGIN_FUNC.RENDER_LINE);
+      for (const plugin of plugins) {
+        const op = { ...EOL_OP, attributes: context.attributes };
+        if (plugin.match(context.attributes, op)) {
+          context.children = plugin.renderLine(context);
+        }
+      }
+      return context;
+    });
+
+    return () => {
+      return h(
+        "div",
+        {
+          [NODE_KEY]: true,
+          ref: setModel,
+          dir: "auto",
+          class: cs(runtime.value.classList),
+          style: runtime.value.style,
+        },
+        runtime.value.children
+      );
+    };
+  },
+});

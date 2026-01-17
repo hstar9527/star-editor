@@ -1,0 +1,45 @@
+{
+  "name": "@block-kit/stream",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./dist/lib/index.js",
+  "types": "./dist/es/index.d.ts",
+  "module": "./dist/es/index.js",
+  "sideEffects": [
+    "**/*.css",
+    "**/*.scss",
+    "**/*.less"
+  ],
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "dev": "concurrently 'tsc -p tsconfig.build.json -w'",
+    "build": "rm -rf dist && tsc -p tsconfig.build.json && tsc -p tsconfig.lib.json",
+    "lint:ts": "tsc -p tsconfig.build.json --noEmit",
+    "lint:circular": "madge --extensions js --circular ./dist"
+  },
+  "author": "WindRunnerMax",
+  "license": "MIT",
+  "keywords": [
+    "editor",
+    "wysiwyg",
+    "rich-text"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WindRunnerMax/BlockKit.git"
+  },
+  "homepage": "https://github.com/WindRunnerMax/BlockKit",
+  "bugs": {
+    "url": "https://github.com/WindRunnerMax/BlockKit/issues"
+  },
+  "dependencies": {
+    "marked": "15.0.8",
+    "@block-kit/delta": "workspace: *",
+    "@block-kit/utils": "workspace: *"
+  },
+  "devDependencies": {
+    "concurrently": "8.2.2"
+  }
+}

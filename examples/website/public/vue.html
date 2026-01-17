@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="./favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Block Kit</title>
+  </head>
+  <body>
+    <% if (process.env.NODE_ENV === "production") { %>
+    <script
+      src="https://registry.npmmirror.com/vue/3.2.31/files/dist/vue.global.prod.js"
+      type="application/javascript"
+      referrerpolicy="no-referrer"
+      crossorigin
+    ></script>
+    <% } else { %>
+    <script
+      src="https://registry.npmmirror.com/vue/3.2.31/files/dist/vue.global.js"
+      type="application/javascript"
+      referrerpolicy="no-referrer"
+      crossorigin
+    ></script>
+    <% } %>
+    <div id="root" class="root"></div>
+  </body>
+</html>

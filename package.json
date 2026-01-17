@@ -1,0 +1,50 @@
+{
+  "name": "blocks-kit",
+  "description": "WYSIWYG Editor Widget",
+  "version": "1.0.16",
+  "scripts": {
+    "bootstrap": "pnpm install --frozen-lockfile",
+    "dev": "pnpm run --filter ./examples/website dev",
+    "build_ex": "pnpm run --filter ./examples/website build",
+    "build": "pnpm run --filter '*' build",
+    "test": "pnpm run --filter '*' test",
+    "lint:ts": "pnpm run --filter '*' lint:ts",
+    "lint:circular": "pnpm run --filter '*' lint:circular"
+  },
+  "author": "WindRunnerMax",
+  "license": "MIT",
+  "keywords": [
+    "editor",
+    "wysiwyg",
+    "rich-text"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WindRunnerMax/BlockKit.git"
+  },
+  "homepage": "https://github.com/WindRunnerMax/BlockKit",
+  "bugs": {
+    "url": "https://github.com/WindRunnerMax/BlockKit/issues"
+  },
+  "devDependencies": {
+    "@types/jest": "29.4.0",
+    "@types/node": "20.12.5",
+    "@typescript-eslint/eslint-plugin": "6.12.0",
+    "@typescript-eslint/parser": "6.12.0",
+    "eslint": "7.11.0",
+    "eslint-config-prettier": "8.3.0",
+    "eslint-plugin-import": "2.25.3",
+    "eslint-plugin-prettier": "3.3.1",
+    "eslint-plugin-react": "7.27.0",
+    "eslint-plugin-react-hooks": "4.3.0",
+    "eslint-plugin-simple-import-sort": "10.0.0",
+    "postcss": "8.3.3",
+    "prettier": "2.4.1",
+    "sass": "1.52.3",
+    "stylelint": "14.7.1",
+    "stylelint-config-sass-guidelines": "9.0.1",
+    "stylelint-config-standard": "25.0.0",
+    "ts-node": "10.9.2",
+    "typescript": "5.3.2"
+  }
+}

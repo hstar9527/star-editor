@@ -1,0 +1,20 @@
+.block-kit-bullet-list {
+  list-style-type: none;
+  margin: 0;
+  padding-left: 0;
+
+  .block-kit-bullet-item::marker {
+    color: rgb(var(--arcoblue-6));
+    margin-right: 0;
+    text-align: unset !important;
+    text-align-last: unset !important;
+  }
+
+  // ["●", "◯", "■"] => disc, circle, square
+  @each $index, $type in 0 disc, 1 circle, 2 square {
+    .block-kit-bullet-item.block-kit-li-level-#{$index} {
+      list-style-type: $type;
+      margin-left: 20px;
+    }
+  }
+}

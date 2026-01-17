@@ -1,0 +1,74 @@
+/* stylelint-disable selector-no-qualifying-type */
+
+/** 编辑器 */
+.block-kit-editable div[data-node],
+.block-kit-editable div[data-placeholder] {
+  line-height: 1.6;
+}
+
+/** 变量模板 */
+.editable-vars > .block-kit-editable-text,
+.editable-selector {
+  background: rgba(0, 102, 255, 0.06);
+  border-radius: 4px;
+  color: #0057ff;
+  cursor: text;
+  display: inline-block;
+  font-weight: bold;
+  margin: 1px 3px;
+  padding: 0 5px;
+}
+
+.block-kit-editable-text {
+  display: inline-block;
+  outline: none;
+
+  &::after {
+    content: attr(data-vars-placeholder);
+    cursor: text;
+    opacity: 0.5;
+    pointer-events: none;
+    user-select: none;
+  }
+}
+
+/** 选择器模板 */
+.editable-selector {
+  align-items: center;
+  cursor: pointer;
+}
+
+.editable-selector-triangle {
+  font-size: 12px;
+  margin-left: 2px;
+  margin-top: 1px;
+  transition: all 0.15s ease-in-out;
+
+  &.editable-selector-triangle-open {
+    transform: rotate(180deg);
+  }
+}
+
+.editable-selector-options {
+  background-color: #fff;
+  border: 1px solid #eee;
+  border-radius: 4px;
+  box-shadow: 1px 1px 3px rgb(229, 230, 235);
+  padding: 7px;
+  position: fixed;
+
+  >div {
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 5px;
+
+    &:hover {
+      background-color: #f5f5f5;
+    }
+
+    &.editable-selector-option-selected {
+      color: #0057ff;
+      font-weight: bold;
+    }
+  }
+}

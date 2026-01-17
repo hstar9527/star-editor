@@ -1,0 +1,57 @@
+{
+  "name": "@block-kit/variable",
+  "version": "1.0.14",
+  "description": "",
+  "main": "./dist/lib/index.js",
+  "types": "./dist/es/index.d.ts",
+  "module": "./dist/es/index.js",
+  "sideEffects": [
+    "**/*.css",
+    "**/*.scss",
+    "**/*.less"
+  ],
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "dev": "concurrently 'tsc -p tsconfig.build.json -w' 'gulp -f gulpfile.js -w'",
+    "style": "gulp -f gulpfile.js",
+    "build": "rm -rf dist && tsc -p tsconfig.build.json && tsc -p tsconfig.lib.json && npm run style",
+    "lint:ts": "tsc -p tsconfig.build.json --noEmit",
+    "lint:circular": "madge --extensions js --circular ./dist"
+  },
+  "author": "WindRunnerMax",
+  "license": "MIT",
+  "keywords": [
+    "editor",
+    "wysiwyg",
+    "rich-text"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WindRunnerMax/BlockKit.git"
+  },
+  "homepage": "https://github.com/WindRunnerMax/BlockKit",
+  "bugs": {
+    "url": "https://github.com/WindRunnerMax/BlockKit/issues"
+  },
+  "peerDependencies": {
+    "react": ">=16",
+    "react-dom": ">=16"
+  },
+  "dependencies": {
+    "@block-kit/core": "workspace: *",
+    "@block-kit/delta": "workspace: *",
+    "@block-kit/react": "workspace: *",
+    "@block-kit/utils": "workspace: *"
+  },
+  "devDependencies": {
+    "@types/react": "17.0.2",
+    "@types/react-dom": "17.0.2",
+    "concurrently": "8.2.2",
+    "gulp": "5.0.0",
+    "gulp-clean-css": "4.3.0",
+    "gulp-concat": "2.6.1",
+    "gulp-sass": "6.0.1"
+  }
+}

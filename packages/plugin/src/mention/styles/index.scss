@@ -1,0 +1,16 @@
+.block-kit-mention-embed {
+  display: inline-block;
+  line-height: 1.3;
+  text-decoration: inherit;
+
+  .block-kit-mention-name {
+    background-color: rgba(var(--arcoblue-6), 0.9);
+    border-radius: 8px;
+    box-sizing: border-box;
+    color: var(--color-white);
+    display: inline-block;
+    margin: 0 3px;
+    padding: 0 4px;
+    text-decoration: inherit;
+  }
+}

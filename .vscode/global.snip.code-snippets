@@ -1,0 +1,21 @@
+{
+  "Console Log": {
+    "prefix": "cl", // 触发简写，输入 cl 按回车
+    "body": [
+      "console.log('$1: ', $1);", // $1 是光标位置，支持变量填充
+      "$2" // 第二行光标位置（可选）
+    ],
+    "description": "快速生成 console.log 语句"
+  },
+  // 可选：带分隔线的 console.log（方便区分日志）
+  "Console Log With Divider": {
+    "prefix": "cld",
+    "body": [
+      "console.log('--------------------------');",
+      "console.log('$1: ', $1);",
+      "console.log('--------------------------');",
+      "$2"
+    ],
+    "description": "生成带分隔线的 console.log"
+  }
+}
