@@ -216,7 +216,7 @@ export class Perform {
    * @param attributes
    */
   public applyMarks(sel: Range, attributes: AttributeMap, options?: ApplyOptions) {
-    debugger
+    debugger;
     if (sel.isCollapsed) {
       this.editor.lookup.marks = {
         ...this.editor.lookup.marks,
@@ -254,7 +254,7 @@ export class Perform {
       const minOffset = Math.min(end.offset, endLine.length - 1);
       delta.retain(minOffset, attributes);
     }
-    debugger
+    debugger;
     this.editor.state.apply(delta.chop(), options);
     return void 0;
   }

@@ -4,7 +4,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "outDir": "dist/es",
-    "declarationDir": "dist/es",
+    "declarationDir": "dist/es"
   },
   "include": ["src/**/*"]
 }

@@ -28,7 +28,6 @@ export class EditorState {
   constructor(protected editor: Editor, delta: Delta) {
     this.status = {};
     this._delta = delta;
-    debugger
     this.block = new BlockState(editor, delta);
   }
 

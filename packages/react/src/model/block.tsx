@@ -28,7 +28,7 @@ const BlockView: FC<{
   const { editor, state } = props;
   const flushing = useRef(false);
   const [lines, setLines] = useState(() => state.getLines());
-console.log('BlockView', lines);
+  console.log("BlockView", lines);
   /**
    * 设置行 DOM 节点
    */

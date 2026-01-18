@@ -22,12 +22,11 @@ export class BoldPlugin extends EditorPlugin {
   }
 
   public match(attrs: AttributeMap): boolean {
-    debugger
     return !!attrs[BOLD_KEY];
   }
 
   public serialize(context: SerializeContext): SerializeContext {
-    debugger
+    debugger;
     const { op, html } = context;
     if (op.attributes && op.attributes[BOLD_KEY]) {
       const strong = document.createElement("strong");
@@ -39,7 +38,7 @@ export class BoldPlugin extends EditorPlugin {
   }
 
   public deserialize(context: DeserializeContext): DeserializeContext {
-    debugger
+    debugger;
     const { delta, html } = context;
     if (!isHTMLElement(html)) return context;
     if (
@@ -53,7 +52,6 @@ export class BoldPlugin extends EditorPlugin {
   }
 
   public renderLeaf(context: ReactLeafContext): ReactNode {
-    debugger
     context.style.fontWeight = "bold";
     return context.children;
   }

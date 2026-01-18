@@ -5,7 +5,7 @@
     "module": "commonjs",
     "baseUrl": ".",
     "outDir": "dist/lib",
-    "declarationDir": "dist/lib",
+    "declarationDir": "dist/lib"
   },
   "include": ["src/**/*"]
 }

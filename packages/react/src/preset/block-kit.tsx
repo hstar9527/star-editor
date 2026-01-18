@@ -16,7 +16,7 @@ export type BlockKitProps = {
 
 export const BlockKit: React.FC<BlockKitProps> = props => {
   const { editor, readonly, children } = props;
-  
+
   if (editor.state.get(EDITOR_STATE.READONLY) !== readonly) {
     editor.state.set(EDITOR_STATE.READONLY, readonly || false);
   }

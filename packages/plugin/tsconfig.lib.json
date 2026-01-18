@@ -5,7 +5,7 @@
     "module": "ES2015",
     "baseUrl": ".",
     "outDir": "dist/lib",
-    "declarationDir": "dist/lib",
+    "declarationDir": "dist/lib"
   },
   "include": ["src/**/*"]
 }

@@ -131,7 +131,7 @@ export const useMemoFn = <T extends Func.Any>(fn: T) => {
 };
 
 export const useMemoFn1 = <T extends Func.Any>(fn: T, test: MutableRefObject<any>) => {
-  debugger
+  debugger;
   const fnRef = useRef(fn);
   const memoFn = useRef<Func.Any>();
 
@@ -142,7 +142,7 @@ export const useMemoFn1 = <T extends Func.Any>(fn: T, test: MutableRefObject<any
     };
   }
 
-  return [memoFn.current as T,fnRef,memoFn];
+  return [memoFn.current as T, fnRef, memoFn];
 };
 
 /**

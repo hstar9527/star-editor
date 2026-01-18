@@ -41,6 +41,7 @@ import { SCHEMA } from "./config/schema";
 
 const App: FC = () => {
   const [readonly] = useState(false);
+  //只在组件首次挂载时执行一次,缓存计算结果
   const editor = useMemo(() => {
     const instance = new Editor({ schema: SCHEMA, delta: INIT, logLevel: LOG_LEVEL.DEBUG });
     instance.plugin.register([

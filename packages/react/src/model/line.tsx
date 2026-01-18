@@ -71,6 +71,7 @@ const LineView: FC<{
     }
     const leaves = lineState.getLeaves();
     const textLeaves = leaves.slice(0, -1);
+
     const nodes = textLeaves.map((n, i) => {
       const node = <LeafModel key={n.key} editor={editor} index={i} leafState={n} />;
       JSX_TO_STATE.set(node, n);

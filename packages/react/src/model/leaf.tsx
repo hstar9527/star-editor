@@ -48,11 +48,12 @@ const LeafView: FC<{
     for (const plugin of plugins) {
       if (plugin.match(context.attributes || {}, context.op)) {
         context.children = plugin.renderLeaf(context);
+        debugger;
       }
     }
     return context;
   }, [editor.plugin, leafState]);
-  
+
   return (
     <span
       key={renderKey}

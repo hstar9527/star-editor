@@ -1,16 +1,16 @@
 {
-    "cSpell.words": [
-        "arcoblue",
-        "COMPAT",
-        "CRDT",
-        "Indexify",
-        "numberify",
-        "pako",
-        "pnpm",
-        "redoable",
-        "rspack",
-        "TSON",
-        "undoable",
-        "webrtc"
-    ]
+  "cSpell.words": [
+    "arcoblue",
+    "COMPAT",
+    "CRDT",
+    "Indexify",
+    "numberify",
+    "pako",
+    "pnpm",
+    "redoable",
+    "rspack",
+    "TSON",
+    "undoable",
+    "webrtc"
+  ]
 }
