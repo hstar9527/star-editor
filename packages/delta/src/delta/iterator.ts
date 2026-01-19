@@ -24,7 +24,7 @@ export class OpIterator {
    * 判断是否存在 Next Op
    */
   public hasNext(): boolean {
-    // 即当前执行的 Op 存在未迭代的部分
+    // 即当前执行的 Op 存在未迭代的部分（如果没有元素了，peekLength方法返回Infinity，Infinity < Infinity返回false）
     return this.peekLength() < Infinity;
   }
 
@@ -96,6 +96,7 @@ export class OpIterator {
       // Should never return 0 if our index is being managed correctly
       return getOpLength(this.ops[this.index]) - this.offset;
     } else {
+      //没有更多元素时返回 Infinity
       return Infinity;
     }
   }

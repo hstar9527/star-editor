@@ -434,12 +434,14 @@ export class Delta {
       }
       const thisOp = iter.peek();
       const start = getOpLength(thisOp) - iter.peekLength();
+      //查找\n换行符，如果存在换行符，则返回大于0的index
       const index = isInsertOp(thisOp) ? thisOp.insert.indexOf(EOL, start) - start : -1;
       if (index < 0) {
         line.push(iter.next());
       } else if (index > 0) {
         line.push(iter.next(index));
       } else {
+        //执行到这里说明一行结束
         const nextOp = iter.next(1);
         line.ops.push(nextOp);
         if (predicate(line, nextOp.attributes || {}, i) === false) {
