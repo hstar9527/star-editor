@@ -10,7 +10,7 @@
     "dist"
   ],
   "scripts": {
-    "build:style": "mkdir -p dist/style && cp src/*.*ss dist/style",
+    "build:style": "if not exist dist\\style mkdir dist\\style && xcopy src\\*.scss dist\\style /Y /I && xcopy src\\*.css dist\\style /Y /I && xcopy src\\*.less dist\\style /Y /I",
     "build": "tsc -p tsconfig.build.json && tsc -p tsconfig.lib.json && npm run build:style",
     "test": "jest --config jest.config.js",
     "lint:ts": "tsc -p tsconfig.build.json --noEmit",

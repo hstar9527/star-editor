@@ -15,7 +15,7 @@
   ],
   "scripts": {
     "dev": "concurrently 'tsc -p tsconfig.build.json -w'",
-    "build": "rm -rf dist && tsc -p tsconfig.build.json && tsc -p tsconfig.lib.json",
+    "build": "if exist dist rmdir /s /q dist && tsc -p tsconfig.build.json && tsc -p tsconfig.lib.json",
     "lint:ts": "tsc -p tsconfig.build.json --noEmit",
     "lint:circular": "madge --extensions js --circular ./dist"
   },

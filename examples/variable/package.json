@@ -16,7 +16,7 @@
   "scripts": {
     "dev": "concurrently 'tsc -p tsconfig.build.json -w' 'gulp -f gulpfile.js -w'",
     "style": "gulp -f gulpfile.js",
-    "build": "rm -rf dist && tsc -p tsconfig.build.json && tsc -p tsconfig.lib.json && npm run style",
+    "build": "if exist dist rmdir /s /q dist && tsc -p tsconfig.build.json && tsc -p tsconfig.lib.json && npm run style",
     "lint:ts": "tsc -p tsconfig.build.json --noEmit",
     "lint:circular": "madge --extensions js --circular ./dist"
   },

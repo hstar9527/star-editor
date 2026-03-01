@@ -4,12 +4,12 @@
   "version": "1.0.16",
   "scripts": {
     "bootstrap": "pnpm install --frozen-lockfile",
-    "dev": "pnpm run --filter ./examples/website dev",
-    "build_ex": "pnpm run --filter ./examples/website build",
-    "build": "pnpm run --filter '*' build",
-    "test": "pnpm run --filter '*' test",
-    "lint:ts": "pnpm run --filter '*' lint:ts",
-    "lint:circular": "pnpm run --filter '*' lint:circular"
+    "dev": "pnpm --filter ./examples/website dev",
+    "build_ex": "pnpm --filter ./examples/website build",
+    "build": "pnpm -r --workspace-concurrency=1 build",
+    "test": "pnpm -r --workspace-concurrency=1 test",
+    "lint:ts": "pnpm -r --workspace-concurrency=1 lint:ts",
+    "lint:circular": "pnpm -r --workspace-concurrency=1 lint:circular"
   },
   "author": "WindRunnerMax",
   "license": "MIT",

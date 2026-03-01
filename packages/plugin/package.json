@@ -14,7 +14,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "rm -rf dist && rollup -c rollup.config.js",
+    "build": "if exist dist rmdir /s /q dist && rollup -c rollup.config.js",
     "lint:ts": "tsc -p tsconfig.build.json --noEmit",
     "lint:circular": "madge --extensions js --circular ./dist"
   },

@@ -75,6 +75,9 @@ export const FloatToolbar: FC<{
     };
   }, [editor, onCaretWeakUp, readonly]);
 
+  /**
+   * 当依赖项不变时，直接使用缓存的结果，不会执行计算函数
+   */
   const { left, top } = useMemo(() => {
     if (!readonly && visible && !isMouseDown) {
       if (props.overridePosition) {
@@ -94,16 +97,14 @@ export const FloatToolbar: FC<{
   }, [index, readonly, visible, isMouseDown]);
 
   // 只读状态 / 不可见 / 鼠标按下 时隐藏
-  return readonly || !visible || isMouseDown
-    ? null
-    : ReactDOM.createPortal(
-        <Toolbar
-          onRef={ref}
-          className={cs("block-kit-float-toolbar", props.className)}
-          styles={{ top: top, left: left }}
-        >
-          {props.children}
-        </Toolbar>,
-        props.mountDOM || MountNode.get(editor)
-      );
+  return ReactDOM.createPortal(
+    <Toolbar
+      onRef={ref}
+      className={cs("block-kit-float-toolbar", props.className)}
+      styles={{ top: top, left: left }}
+    >
+      {props.children}123
+    </Toolbar>,
+    props.mountDOM || MountNode.get(editor)
+  );
 };
