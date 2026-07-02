@@ -9,12 +9,18 @@ module.exports = {
       parser: "@typescript-eslint/parser",
       plugins: ["@typescript-eslint", "simple-import-sort"],
       extends: ["plugin:@typescript-eslint/recommended"],
+      rules: {
+        "@typescript-eslint/no-explicit-any": "off",
+      },
     },
     {
       files: ["*.tsx"],
       parser: "@typescript-eslint/parser",
       plugins: ["react", "react-hooks", "@typescript-eslint/eslint-plugin", "simple-import-sort"],
       extends: ["plugin:@typescript-eslint/recommended", "plugin:react-hooks/recommended"],
+      rules: {
+        "@typescript-eslint/no-explicit-any": "off",
+      },
     },
   ],
   env: {

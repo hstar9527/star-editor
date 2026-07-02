@@ -26,6 +26,7 @@ const config: Configuration = {
     // vue: "./src/vue/index.ts",
     variable: "./src/variable/index.tsx",
     streaming: "./src/stream/index.tsx",
+    xcch4: "./src/xiecheng-ch4/index.tsx",
   },
   externals: {
     "react": "React",
@@ -34,6 +35,11 @@ const config: Configuration = {
   },
   plugins: [
     new CopyPlugin([{ from: "./public", to: "./" }]),
+    new HtmlPlugin({
+      filename: "xcch4.html",
+      template: "./public/index.html",
+      chunks: ["xcch4"],
+    }),
     new HtmlPlugin({
       filename: "index.html",
       template: "./public/index.html",
